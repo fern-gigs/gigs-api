@@ -1,0 +1,137 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+services:
+  http:
+    DeviceService:
+      auth: true 
+      base-path: /
+      endpoints:
+        retrieve:
+          display-name: Retrieve a device model
+          docs: Retrieves the details of an existing device model.
+          path: /deviceModels/{id}
+          path-parameters:
+            id: DeviceId
+          method: GET
+          response: 
+            type: Device
+            docs: Returns the device model object if it exists.
+          errors:
+            - DoesNotExist #need to add the 2 examples
+          examples:
+            - path-parameters:
+                id: dmd_0SNlurA04OUskUGfGAn3Rh
+              response: 
+                object: deviceModel
+                id: dmd_0SNlurA04OUskUGfGAn3Rh
+                brand: Apple 
+                name: iPhone 12 Pro
+                type: smartphone
+            #error - required
+            - error:
+                object: error 
+                message: Invalid ICCID format.
+                type: invalid 
+            #error - full
+            - error:
+                object: error 
+                code: invalidICCID
+                details: 
+                  object: propertyErrorDetail
+                  code: propertyRequired
+                  message: Invalid value for property.
+                  property: property1
+                  suggestion: alternative_value
+                #how do we represent a list in examples
+                documentation: [https://developers.gigs.com/docs/api/ZG9jOjExMTYzMDU0-error-handling]
+                hint: Parameter iccid must match /^([0-9]{19}F?|[0-9]{20})$/i
+                message: Invalid ICCID format.
+                type: invalid
+types:
+  DeviceId: string
+  Device: 
+    properties:
+      object:
+        docs: Type of object is always `deviceModel`.
+        type: string 
+      id: 
+        docs: Unique identifier for the deviceModel.
+        type: DeviceId 
+      brand:
+        docs: The brand of the device model.
+        type: string
+      name: 
+        docs: The device model's name.
+        type: string
+      simTypes: 
+        docs: List of SIM types supported by this device model.
+        type: list<SimTypes>
+      type:
+        docs: The type of the device model.
+        type: DeviceModelType
+  SimTypes:
+    enum:
+      - eSIM
+      - pSIM
+  DeviceModelType: 
+    enum: 
+      - car
+      - iot
+      - laptop
+      - router
+      - smartphone
+      - feature-phone
+      - smartwatch
+      - tablet
+      - wearable
+      - other
+
+  DoesNotExistBody: 
+    properties:
+      object: 
+        docs: Type of object is always `error`.
+        type: string 
+      code: 
+        docs: A machine-readable description of the error.
+        type: optional<string>
+      details: 
+        docs: Optional array containing specific information for the current error.Show all...
+        type: optional<list<PropertyErrorDetail>> #does a list need optional if it isn't required?
+      documentation:
+        docs: An optional list of URLs providing further information to resolve the error.
+        type: optional<list<string>>
+      hint: 
+        docs: An optional explanation how to resolve the error.
+        type: optional<string>
+      message: 
+        docs: A human readable description of the error.
+        type: string
+      type: 
+        docs: The type of error returned.
+        type: string 
+
+  PropertyErrorDetail: 
+    properties:
+      object: 
+        docs: Type of object is always `propertyErrorDetail`.
+        type: string 
+      code: 
+        docs: A machine-readable description of the error.
+        type: string
+      message: 
+        docs: A human readable description of the error.
+        type: string 
+      property: 
+        docs: Name of the property associated with the error.
+        type: string 
+      suggestion: 
+        docs: Suggested alternative value for the field.
+        type: string #how do I represent: string or null ?
+         
+errors:
+  DoesNotExist: 
+    docs: The requested resource doesn't exist.
+    status-code: 404
+    type: DoesNotExistBody      
+      
+

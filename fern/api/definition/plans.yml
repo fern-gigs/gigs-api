@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+services:
+  http:
+    PlanService:
+      auth: true 
+      base-path: /
+      endpoints:
+        archive:
+          display-name: Archive a plan
+          docs: Set the status of a plan to archived. An archived plan can not be used to create new subscriptions.
+          path: /projects/{project}/plans/{id}/archive
+          path-parameters:
+            project: 
+              docs: The unique identifier for the project.
+              type: string 
+            id: 
+              docs: The unique identifier for the plan.
+              type: PlanId 
+          method: GET
+          response: 
+            type: Plan
+            docs: Returns the archived plan.
+          errors:
+            - DoesNotExist #need to add the 2 examples
+          examples:
+            - path-parameters:
+                project: gigs
+                id: pln_0SNlurA049MEWV3V0q7gjQbM4EVo
+              response: 
+                object: plan 
+                id: pln_0SNlurA049MEWV3V0q7gjQbM4EVo
+
+
+types: 
+  PlanId: string 
+  Plan: 
+    properties:
+      object: 
+        docs: Type of object is always `plan`.
+        type: string 
+      id: 
+        docs:  The unique identifier for the plan.
+        type: PlanId
+      #etc. (there are many more properties)
