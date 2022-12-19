@@ -89,26 +89,10 @@ types:
       - laptop
       - router
       - smartphone
-      - feature-phone
+      - value: feature_phone
+        name: feature-phone
       - smartwatch
       - tablet
       - wearable
       - other
 
-  PropertyErrorDetail: 
-    properties:
-      object: 
-        docs: Type of object is always `propertyErrorDetail`.
-        type: string 
-      code: 
-        docs: A machine-readable description of the error.
-        type: string
-      message: 
-        docs: A human readable description of the error.
-        type: string 
-      property: 
-        docs: Name of the property associated with the error.
-        type: string 
-      suggestion: 
-        docs: Suggested alternative value for the field.
-        type: optional<string>

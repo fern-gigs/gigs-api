@@ -19,28 +19,29 @@ services:
             project: 
               docs: The unique identifier for the project.
               type: string 
-          query-parameters:
-            after: 
-              docs: A cursor for use in pagination. The after parameter takes an object ID that defines the position in the list, only items immediately following the item with that ID will be returned.
-              type: optional<string>
-            before:
-              docs: A cursor for use in pagination. The before parameter takes an object ID that defines the position in the list, only items immediately preceding the item with that ID will be returned.
-              type: optional<string>
-            limit:
-              docs: The limit of items to be returned in the list, between 0 and 200. `>= 0` `<= 200`. Default is `10`.
-              type: optional<integer> 
-            plan:
-              docs: The unique identifier for the plan to be filtered by.
-              type: optional<PlanId>
-            sim:
-              docs: The unique identifier for the sim to be filtered by.
-              type: optional<SimId>
-            status:
-              docs: A comma-separated list of statuses to filter the subscriptions by. Only pending and active subscriptions are returned by default. Default is `pending` `active`.
-              type: optional<list<SubscriptionStatus>>
-            user:
-              docs: The unique identifier for the user to be filtered by.
-              type: optional<string>
+          request:
+            query-parameters:
+              after: 
+                docs: A cursor for use in pagination. The after parameter takes an object ID that defines the position in the list, only items immediately following the item with that ID will be returned.
+                type: optional<string>
+              before:
+                docs: A cursor for use in pagination. The before parameter takes an object ID that defines the position in the list, only items immediately preceding the item with that ID will be returned.
+                type: optional<string>
+              limit:
+                docs: The limit of items to be returned in the list, between 0 and 200. `>= 0` `<= 200`. Default is `10`.
+                type: optional<integer> 
+              plan:
+                docs: The unique identifier for the plan to be filtered by.
+                type: optional<PlanId>
+              sim:
+                docs: The unique identifier for the sim to be filtered by.
+                type: optional<SimId>
+              status:
+                docs: A comma-separated list of statuses to filter the subscriptions by. Only pending and active subscriptions are returned by default. Default is `pending` `active`.
+                type: optional<list<SubscriptionStatus>>
+              user:
+                docs: The unique identifier for the user to be filtered by.
+                type: optional<string>
           method: GET
           response:
             type: list<Subscription>
