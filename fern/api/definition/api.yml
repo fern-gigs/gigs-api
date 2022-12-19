@@ -1,5 +1,7 @@
 name: api
 auth: bearer
+error-discrimination: 
+  strategy: status-code
 environments:
   Production: https://api.example.com
   Sandbox: https://sandbox.example.com

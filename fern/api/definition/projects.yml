@@ -1,0 +1,157 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+services:
+  http:
+    ProjectService:
+      auth: true 
+      base-path: /projects  
+      endpoints:
+        retrieve:
+          display-name: Retrieve a project
+          docs: Retrieves the details of an existing project accessible by the API client.
+          path: /{project}
+          path-parameters:
+            project: 
+              type: ProjectId
+              docs: The unique identifier for the project.
+          method: GET
+          response: 
+            type: Project
+            docs: Returns the project object if it exists.
+          errors:
+            - commons.DoesNotExist #need to add the 2 examples
+          examples:
+            - path-parameters:
+                id: gigs
+              response: 
+                object: project
+                id: gigs
+                legal: 
+                  name: Gigs Inc.
+                  city: New York City 
+                  country: US 
+                  line1: 129 West 81st Street
+                  line2: Apartment 5A
+                  postalCode: "10024"
+                  state: NY
+                locales: 
+                  ["en-US"]
+                name: Gigs Connect 
+                organization: 
+                  object: organization 
+                  id: org_0SNlurA04kOdemVEMVZQBF
+                  name: Gigs
+                  createdAt: "2021-02-01T13:21:30Z"
+                payments: 
+                  currency: USD
+                  mode: live
+                subscriptionOwner: company 
+                support: 
+                  email: support@gigs.com
+                  phoneNumber: "+12345678900"
+                createdAt: "2021-01-21T19:32:13Z"
+
+types:
+  ProjectId: string
+  OrganizationId: string
+
+  Project: 
+    properties:
+      object: 
+        type: string 
+        docs: Type of object is always `project`.
+      id: 
+        type: ProjectId  
+        docs: Globally unique identifier for the project.
+      image: 
+        type: optional<string>
+        docs: Small-resolution project icon with an aspect ratio of 1:1.
+      legal:
+        type: optional<LegalAddress>
+        docs: The legal address for the company that manages the project.
+      locales: 
+        type: list<string> 
+        docs: List of supported locales represented as IETF language tags, ordered by preference.
+      name: 
+        type: string 
+        docs: A human-readable name for the project.
+      organization: Organization
+      payments: Payments 
+      subscriptionOwner:
+        type: SubscriptionOwner
+        docs: Indicates which entity will be registered as the owner of the subscription with the providers. When company is selected the legal address associated with the project will be used for the registration.
+      support: 
+        type: optional<Support>
+        docs: Contact details for consumer support requests regarding the project.
+
+  LegalAddress:
+    docs: The legal address for the company that manages the project.
+    properties:
+      name: 
+        docs: The company's legal name.
+        type: string 
+      city:
+        docs: The city/municipality of the company's legal address.
+        type: string
+      country:
+        docs: The ISO 3166-1 alpha-2 country code for the company's legal address.
+        type: string 
+      line1: 
+        docs: The first line of the company's legal address, e.g. street and house number.
+        type: string
+      line2: 
+        docs: The second line of the given street address, e.g. Apartment number.
+        type: string
+      postalCode:
+        docs: The postal code of the given street address.
+        type: string
+      state: 
+        docs: The state/province/region of the given street address.
+        type: string
+  
+  Organization: 
+    properties:
+      object: 
+        type: string
+        docs: Type of object is always `organization`.
+      id: 
+        type: OrganizationId  
+        docs: Unique identifier for the organization.
+      name: 
+        type: string
+        docs: Name for the organization.
+      createdAt: 
+        type: datetime 
+        docs: Time when the organization was created.
+  
+  Payments: 
+    docs: Configuration parameters for the project use of payments.
+    properties:
+      currency: 
+        type: string 
+        docs: Three-letter ISO 4217 currency code representing the currency of the project. Must be a supported currency.
+      mode: 
+        type: PaymentsMode
+        docs: The mode in which the payments operate.
+
+  PaymentsMode: 
+    enum: 
+      - live
+      - test
+      
+  SubscriptionOwner:
+    enum:
+      - user
+      - company
+      
+  Support: 
+    properties:
+      email: 
+        type: optional<string>
+        docs: A publicly available email address for consumer support requests regarding the project.
+      phoneNumber: 
+        type: optional<string>
+        docs: A publicly available phone number in E.164 format for consumer support requests regarding the project.

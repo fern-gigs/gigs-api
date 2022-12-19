@@ -1,0 +1,32 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  DoesNotExistBody: 
+      properties:
+        object: 
+          docs: Type of object is always `error`.
+          type: string 
+        code: 
+          docs: A machine-readable description of the error.
+          type: optional<string>
+        details: 
+          docs: Optional array containing specific information for the current error.Show all...
+          type: optional<list<PropertyErrorDetail>> #does a list need optional if it isn't required?
+        documentation:
+          docs: An optional list of URLs providing further information to resolve the error.
+          type: optional<list<string>>
+        hint: 
+          docs: An optional explanation how to resolve the error.
+          type: optional<string>
+        message: 
+          docs: A human readable description of the error.
+          type: string
+        type: 
+          docs: The type of error returned.
+          type: string 
+
+errors:
+  DoesNotExist: 
+    docs: The requested resource doesn't exist.
+    status-code: 404
+    type: DoesNotExistBody
