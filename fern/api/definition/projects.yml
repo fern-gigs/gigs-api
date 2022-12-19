@@ -1,5 +1,3 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 imports:
   commons: commons.yml
 
@@ -27,32 +25,33 @@ services:
             - path-parameters:
                 id: gigs
               response: 
-                object: project
-                id: gigs
-                legal: 
-                  name: Gigs Inc.
-                  city: New York City 
-                  country: US 
-                  line1: 129 West 81st Street
-                  line2: Apartment 5A
-                  postalCode: "10024"
-                  state: NY
-                locales: 
-                  ["en-US"]
-                name: Gigs Connect 
-                organization: 
-                  object: organization 
-                  id: org_0SNlurA04kOdemVEMVZQBF
-                  name: Gigs
-                  createdAt: "2021-02-01T13:21:30Z"
-                payments: 
-                  currency: USD
-                  mode: live
-                subscriptionOwner: company 
-                support: 
-                  email: support@gigs.com
-                  phoneNumber: "+12345678900"
-                createdAt: "2021-01-21T19:32:13Z"
+                body:
+                  object: project
+                  id: gigs
+                  legal: 
+                    name: Gigs Inc.
+                    city: New York City 
+                    country: US 
+                    line1: 129 West 81st Street
+                    line2: Apartment 5A
+                    postalCode: "10024"
+                    state: NY
+                  locales: 
+                    ["en-US"]
+                  name: Gigs Connect 
+                  organization: 
+                    object: organization 
+                    id: org_0SNlurA04kOdemVEMVZQBF
+                    name: Gigs
+                    createdAt: "2021-02-01T13:21:30Z"
+                  payments: 
+                    currency: USD
+                    mode: live
+                  subscriptionOwner: company 
+                  support: 
+                    email: support@gigs.com
+                    phoneNumber: "+12345678900"
+                  createdAt: "2021-01-21T19:32:13Z"
 
 types:
   ProjectId: string

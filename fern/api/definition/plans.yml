@@ -1,5 +1,3 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 imports:
   commons: commons.yml
 
@@ -31,8 +29,9 @@ services:
                 project: gigs
                 id: pln_0SNlurA049MEWV3V0q7gjQbM4EVo
               response: 
-                object: plan 
-                id: pln_0SNlurA049MEWV3V0q7gjQbM4EVo
+                body:
+                  object: plan 
+                  id: pln_0SNlurA049MEWV3V0q7gjQbM4EVo
 
 
 types: 

@@ -1,5 +1,3 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 imports:
   projects: projects.yml
 
@@ -51,26 +49,27 @@ services:
             - path-parameters:
                 project: gigs
               response: 
-                object: list 
-                items: 
-                  object: subscription
-                  id: sub_0SNlurA049MEWV2gSfSxi00xlPIi
-                  currentPeriod: 
-                    number: "1"
-                    start: "2021-01-21T19:32:13Z"
-                    end: "2021-02-20T19:38:34Z"
-                  phoneNumber: "+25411865216434"
-                  plan: pln_0SNlurA049MEWV3V0q7gjQbM4EVo
-                  porting: prt_0SNlurA049MEWV39s2kSYqaat7ZS
-                  sim: sim_0SNlurA049MEWV1BAAmWZULA4lf6
-                  status: pending
-                  user: usr_0SNlurA049MEWV4OpCwsNyC9Kn2d
-                  activatedAt: "2021-01-21T19:38:34Z"
-                  canceledAt: "2021-01-29T13:22:51Z"
-                  endedAt: "2021-02-20T19:38:34Z"
-                  firstUsageAt: "2021-01-21T19:38:34Z"
-                moreItemsAfter: null
-                moreItemsBefore: null
+                body:
+                  object: list 
+                  items: 
+                    object: subscription
+                    id: sub_0SNlurA049MEWV2gSfSxi00xlPIi
+                    currentPeriod: 
+                      number: "1"
+                      start: "2021-01-21T19:32:13Z"
+                      end: "2021-02-20T19:38:34Z"
+                    phoneNumber: "+25411865216434"
+                    plan: pln_0SNlurA049MEWV3V0q7gjQbM4EVo
+                    porting: prt_0SNlurA049MEWV39s2kSYqaat7ZS
+                    sim: sim_0SNlurA049MEWV1BAAmWZULA4lf6
+                    status: pending
+                    user: usr_0SNlurA049MEWV4OpCwsNyC9Kn2d
+                    activatedAt: "2021-01-21T19:38:34Z"
+                    canceledAt: "2021-01-29T13:22:51Z"
+                    endedAt: "2021-02-20T19:38:34Z"
+                    firstUsageAt: "2021-01-21T19:38:34Z"
+                  moreItemsAfter: null
+                  moreItemsBefore: null
 
 types: 
   PlanId: string 

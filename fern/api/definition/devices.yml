@@ -1,5 +1,3 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 imports:
   commons: commons.yml
 
@@ -22,34 +20,42 @@ services:
           errors:
             - commons.DoesNotExist #need to add the 2 examples
           examples:
+            #success
             - path-parameters:
                 id: dmd_0SNlurA04OUskUGfGAn3Rh
               response: 
-                object: deviceModel
-                id: dmd_0SNlurA04OUskUGfGAn3Rh
-                brand: Apple 
-                name: iPhone 12 Pro
-                type: smartphone
+                body: 
+                  object: deviceModel
+                  id: dmd_0SNlurA04OUskUGfGAn3Rh
+                  brand: Apple 
+                  name: iPhone 12 Pro
+                  type: smartphone
             #error - required
-            - error:
-                object: error 
-                message: Invalid ICCID format.
-                type: invalid 
+            - path-parameters:
+                id: myInvalidId
+              response:
+                error: DoesNotExist 
+                body: 
+                  object: error
+                  message: Invalid ICCID format.
             #error - full
-            - error:
-                object: error 
-                code: invalidICCID
-                details: 
-                  object: propertyErrorDetail
-                  code: propertyRequired
-                  message: Invalid value for property.
-                  property: property1
-                  suggestion: alternative_value
-                #how do we represent a list in examples
-                documentation: [https://developers.gigs.com/docs/api/ZG9jOjExMTYzMDU0-error-handling]
-                hint: Parameter iccid must match /^([0-9]{19}F?|[0-9]{20})$/i
-                message: Invalid ICCID format.
-                type: invalid
+            - path-parameters:
+                id: myInvalidId
+              response:
+                error: DoesNotExist 
+                body: 
+                  object: error
+                  code: invalidICCID
+                  details: 
+                    object: propertyErrorDetail
+                    code: propertyRequired
+                    message: Invalid value for property.
+                    property: property1
+                    suggestion: alternative_value
+                  documentation: [https://developers.gigs.com/docs/api/ZG9jOjExMTYzMDU0-error-handling]
+                  hint: Parameter iccid must match /^([0-9]{19}F?|[0-9]{20})$/i
+                  message: Invalid ICCID format.
+                  type: invalid
 types:
   DeviceId: string
   Device: 
