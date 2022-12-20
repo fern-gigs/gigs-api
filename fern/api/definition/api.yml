@@ -3,6 +3,5 @@ auth: bearer
 error-discrimination: 
   strategy: status-code
 environments:
-  Production: https://api.example.com
-  Sandbox: https://sandbox.example.com
+  Production: https://api.gigs.com
 default-environment: Production
