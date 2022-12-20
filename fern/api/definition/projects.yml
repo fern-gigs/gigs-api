@@ -23,7 +23,7 @@ services:
             - commons.DoesNotExist #need to add the 2 examples
           examples:
             - path-parameters:
-                id: gigs
+                project: gigs
               response: 
                 body:
                   object: project
@@ -85,6 +85,9 @@ types:
       support: 
         type: optional<Support>
         docs: Contact details for consumer support requests regarding the project.
+      createdAt: 
+        type: datetime
+        docs: Time when the project was created.
 
   LegalAddress:
     docs: The legal address for the company that manages the project.

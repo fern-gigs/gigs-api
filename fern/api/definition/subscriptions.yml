@@ -1,5 +1,6 @@
 imports:
   projects: projects.yml
+  plans: plans.yml
 
 services:
   http:
@@ -15,11 +16,8 @@ services:
           display-name: List all subscriptions
           docs: Returns a list of subscriptions. The subscriptions returned are sorted by creation date, with the most recently created subscriptions appearing first.
           path: /subscriptions
-          path-parameters:
-            project: 
-              docs: The unique identifier for the project.
-              type: string 
           request:
+            name: ListAllSubscriptionsRequest
             query-parameters:
               after: 
                 docs: A cursor for use in pagination. The after parameter takes an object ID that defines the position in the list, only items immediately following the item with that ID will be returned.
@@ -32,48 +30,47 @@ services:
                 type: optional<integer> 
               plan:
                 docs: The unique identifier for the plan to be filtered by.
-                type: optional<PlanId>
+                type: optional<plans.PlanId>
               sim:
                 docs: The unique identifier for the sim to be filtered by.
                 type: optional<SimId>
               status:
                 docs: A comma-separated list of statuses to filter the subscriptions by. Only pending and active subscriptions are returned by default. Default is `pending` `active`.
-                type: optional<list<SubscriptionStatus>>
+                type: optional<SubscriptionStatus>
               user:
                 docs: The unique identifier for the user to be filtered by.
                 type: optional<string>
           method: GET
           response:
-            type: list<Subscription>
-            docs: Returns the archived plan.
+            type: Subscription
+            docs: Returns a list of subscriptions. The subscriptions returned are sorted by creation date, with the most recently created subscriptions appearing first.
           examples:
             - path-parameters:
                 project: gigs
               response: 
                 body:
-                  object: list 
-                  items: 
-                    object: subscription
-                    id: sub_0SNlurA049MEWV2gSfSxi00xlPIi
-                    currentPeriod: 
-                      number: "1"
-                      start: "2021-01-21T19:32:13Z"
-                      end: "2021-02-20T19:38:34Z"
-                    phoneNumber: "+25411865216434"
-                    plan: pln_0SNlurA049MEWV3V0q7gjQbM4EVo
-                    porting: prt_0SNlurA049MEWV39s2kSYqaat7ZS
-                    sim: sim_0SNlurA049MEWV1BAAmWZULA4lf6
-                    status: pending
-                    user: usr_0SNlurA049MEWV4OpCwsNyC9Kn2d
-                    activatedAt: "2021-01-21T19:38:34Z"
-                    canceledAt: "2021-01-29T13:22:51Z"
-                    endedAt: "2021-02-20T19:38:34Z"
-                    firstUsageAt: "2021-01-21T19:38:34Z"
+                  object: list
+                  items:
+                    - object: subscription
+                      id: sub_0SNlurA049MEWV2gSfSxi00xlPIi
+                      currentPeriod:
+                        number: 1
+                        start: '2021-01-21T19:32:13Z'
+                        end: '2021-02-20T19:38:34Z'
+                      phoneNumber: '+25411865216434'
+                      plan: pln_0SNlurA049MEWV3V0q7gjQbM4EVo
+                      porting: prt_0SNlurA049MEWV39s2kSYqaat7ZS
+                      sim: sim_0SNlurA049MEWV1BAAmWZULA4lf6
+                      status: pending
+                      user: usr_0SNlurA049MEWV4OpCwsNyC9Kn2d
+                      activatedAt: '2021-01-21T19:38:34Z'
+                      canceledAt: '2021-01-29T13:22:51Z'
+                      createdAt: '2021-01-21T19:32:13Z'
+                      endedAt: '2021-02-20T19:38:34Z'
+                      firstUsageAt: '2021-01-21T19:38:34Z'
                   moreItemsAfter: null
                   moreItemsBefore: null
-
 types: 
-  PlanId: string 
   SimId: string 
   SubscriptionId: string
   SubscriptionStatus: 
@@ -105,7 +102,7 @@ types:
         docs: Unique identifier for the subscription.
       currentPeriod: optional<CurrentPeriod>
       phoneNumber:
-        type: integer
+        type: string
         docs: The phone number attached to the SIM in E.164 format. Only available for voice plans.
       plan: string #TODO model the nested object
       porting:

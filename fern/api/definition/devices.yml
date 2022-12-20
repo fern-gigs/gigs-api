@@ -18,7 +18,7 @@ services:
             type: Device
             docs: Returns the device model object if it exists.
           errors:
-            - commons.DoesNotExist #need to add the 2 examples
+            - commons.DoesNotExist
           examples:
             #success
             - path-parameters:
@@ -29,30 +29,33 @@ services:
                   id: dmd_0SNlurA04OUskUGfGAn3Rh
                   brand: Apple 
                   name: iPhone 12 Pro
+                  simTypes: [eSIM]
                   type: smartphone
             #error - required
             - path-parameters:
                 id: myInvalidId
               response:
-                error: DoesNotExist 
+                error: commons.DoesNotExist 
                 body: 
                   object: error
                   message: Invalid ICCID format.
+                  type: invalid
             #error - full
             - path-parameters:
                 id: myInvalidId
               response:
-                error: DoesNotExist 
+                error: commons.DoesNotExist 
                 body: 
                   object: error
                   code: invalidICCID
-                  details: 
-                    object: propertyErrorDetail
-                    code: propertyRequired
-                    message: Invalid value for property.
-                    property: property1
-                    suggestion: alternative_value
-                  documentation: [https://developers.gigs.com/docs/api/ZG9jOjExMTYzMDU0-error-handling]
+                  details:
+                    - object: commons.propertyErrorDetail
+                      code: propertyRequired
+                      message: Invalid value for property.
+                      property: property1
+                      suggestion: alternative_value 
+                  documentation:
+                    - https://developers.gigs.com/docs/api/ZG9jOjExMTYzMDU0-error-handling
                   hint: Parameter iccid must match /^([0-9]{19}F?|[0-9]{20})$/i
                   message: Invalid ICCID format.
                   type: invalid
@@ -90,7 +93,7 @@ types:
       - router
       - smartphone
       - value: feature_phone
-        name: feature-phone
+        name: featurephone
       - smartwatch
       - tablet
       - wearable
