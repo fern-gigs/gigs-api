@@ -3,9 +3,6 @@
 Tagging a release on this repository will update the:
 
 - [Node.js SDK repo](https://github.com/fern-gigs/gigs-node)
-- [Java SDK repo](https://github.com/fern-gigs/gigs-java)
-- [OpenAPI description repo](https://github.com/fern-gigs/gigs-openapi)
-- [Postman collection repo](https://github.com/fern-gigs/gigs-postman)
 - _More SDKs to come..._
 
 ## What is in this repository?
@@ -17,7 +14,7 @@ This repository contains
 
 ## What is in the API Definition?
 
-The API Definition contains information about what endpoints, types, and errors are used in the API. The definition is broken into smaller files such as [devices.yml](fern/api/definition/devices.yml) and [{TODO}.yml](fern/api/definition/{TODO}.yml).
+The API Definition contains information about what endpoints, types, and errors are used in the API. The definition is broken into smaller files such as [devices.yml](fern/api/definition/devices.yml) and [subscriptions.yml](fern/api/definition/subscriptions.yml).
 
 In order to make sure that the definition is valid, you can use the Fern CLI.
 
