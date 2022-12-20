@@ -1,0 +1,101 @@
+imports:
+  commons: commons.yml
+
+services:
+  http:
+    DeviceService:
+      auth: true 
+      base-path: /
+      endpoints:
+        retrieve:
+          display-name: Retrieve a device model
+          docs: Retrieves the details of an existing device model.
+          path: /deviceModels/{id}
+          path-parameters:
+            id: DeviceId
+          method: GET
+          response: 
+            type: Device
+            docs: Returns the device model object if it exists.
+          errors:
+            - commons.DoesNotExist
+          examples:
+            #success
+            - path-parameters:
+                id: dmd_0SNlurA04OUskUGfGAn3Rh
+              response: 
+                body: 
+                  object: deviceModel
+                  id: dmd_0SNlurA04OUskUGfGAn3Rh
+                  brand: Apple 
+                  name: iPhone 12 Pro
+                  simTypes: [eSIM]
+                  type: smartphone
+            #error - required
+            - path-parameters:
+                id: myInvalidId
+              response:
+                error: commons.DoesNotExist 
+                body: 
+                  object: error
+                  message: Invalid ICCID format.
+                  type: invalid
+            #error - full
+            - path-parameters:
+                id: myInvalidId
+              response:
+                error: commons.DoesNotExist 
+                body: 
+                  object: error
+                  code: invalidICCID
+                  details:
+                    - object: commons.propertyErrorDetail
+                      code: propertyRequired
+                      message: Invalid value for property.
+                      property: property1
+                      suggestion: alternative_value 
+                  documentation:
+                    - https://developers.gigs.com/docs/api/ZG9jOjExMTYzMDU0-error-handling
+                  hint: Parameter iccid must match /^([0-9]{19}F?|[0-9]{20})$/i
+                  message: Invalid ICCID format.
+                  type: invalid
+types:
+  DeviceId: string
+  Device: 
+    properties:
+      object:
+        docs: Type of object is always `deviceModel`.
+        type: string 
+      id: 
+        docs: Unique identifier for the deviceModel.
+        type: DeviceId 
+      brand:
+        docs: The brand of the device model.
+        type: string
+      name: 
+        docs: The device model's name.
+        type: string
+      simTypes: 
+        docs: List of SIM types supported by this device model.
+        type: list<SimTypes>
+      type:
+        docs: The type of the device model.
+        type: DeviceModelType
+  SimTypes:
+    enum:
+      - eSIM
+      - pSIM
+  DeviceModelType: 
+    enum: 
+      - car
+      - iot
+      - laptop
+      - router
+      - smartphone
+      - value: feature_phone
+        name: featurephone
+      - smartwatch
+      - tablet
+      - wearable
+      - other
+
