@@ -1,5 +1,6 @@
 imports:
   commons: commons.yml
+  sims: sims.yml
 
 services:
   http:
@@ -77,7 +78,7 @@ types:
         type: string
       simTypes: 
         docs: List of SIM types supported by this device model.
-        type: list<commons.SimTypes>
+        type: list<sims.SimTypes>
       type:
         docs: The type of the device model.
         type: DeviceModelType

@@ -1,5 +1,6 @@
 imports:
   commons: commons.yml
+  sims: sims.yml
 
 services:
   http:
@@ -32,7 +33,7 @@ services:
                 type: optional<PlanId>
               sim:
                 docs: The unique identifier for the sim to be filtered by.
-                type: optional<commons.SimId>
+                type: optional<sims.SimId>
               status:
                 docs: The status to filter the plans by. Only available plans are returned by default.
                 type: optional<PlanStatus>
@@ -191,7 +192,7 @@ types:
       requirements: PlanRequirements
       simTypes:
         docs: List of SIM types supported by this plan.
-        type: list<commons.SimTypes> 
+        type: list<sims.SimTypes> 
       sms: 
         docs: The SMS allowance included in this plan. A value of `-1` indicates unlimited SMS.
         type: integer 

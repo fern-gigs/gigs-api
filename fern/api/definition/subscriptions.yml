@@ -1,7 +1,8 @@
 imports:
   projects: projects.yml
   plans: plans.yml
-  commons: commons.yml
+  sims: sims.yml
+  users: users.yml
 
 services:
   http:
@@ -36,6 +37,9 @@ services:
                 porting: 
                   type: optional<string>
                   docs: The unique identifier for the existing draft porting to be used for the subscription.
+          response: 
+            docs: Returns the newly created subscription and supporting objects.
+            type: Subscription
           examples: 
             - path-parameters:
                 project: gigs
@@ -47,7 +51,7 @@ services:
                 porting: prt_0SNlurA049MEWV39s2kSYqaat7ZS
               response: 
                 # success
-                body: 
+                body:
                   object: subscription
                   id: sub_0SNlurA049MEWV2gSfSxi00xlPIi
                   currentPeriod:
@@ -143,7 +147,7 @@ services:
                 type: optional<plans.PlanId>
               sim:
                 docs: The unique identifier for the sim to be filtered by.
-                type: optional<commons.SimId>
+                type: optional<sims.SimId>
               status:
                 docs: A comma-separated list of statuses to filter the subscriptions by. Only pending and active subscriptions are returned by default. Default is `pending` `active`.
                 type: optional<SubscriptionStatus>
@@ -152,7 +156,7 @@ services:
                 type: optional<string>
           method: GET
           response:
-            type: Subscription
+            type: SubscriptionList
             docs: Returns a list of subscriptions. The subscriptions returned are sorted by creation date, with the most recently created subscriptions appearing first.
           examples:
             - path-parameters:
@@ -165,29 +169,125 @@ services:
                       id: sub_0SNlurA049MEWV2gSfSxi00xlPIi
                       currentPeriod:
                         number: 1
-                        start: "2021-01-21T19:32:13Z"
-                        end: "2021-02-20T19:38:34Z"
-                      phoneNumber: "+25411865216434"
-                      plan: pln_0SNlurA049MEWV3V0q7gjQbM4EVo
+                        start: '2021-01-21T19:32:13Z'
+                        end: '2021-02-20T19:38:34Z'
+                      phoneNumber: '+25411865216434'
+                      plan:
+                        object: plan
+                        id: pln_0SNlurA049MEWV3V0q7gjQbM4EVo
+                        coverage:
+                          object: coverage
+                          id: de
+                          countries:
+                            - DE
+                            - FR
+                            - US
+                          name: Europe
+                        data: 10000000000
+                        dataUnit: byte
+                        description: A data plan you will love! Operates in most countries of the world.
+                        image: https://i.gigscdn.com/pr/nTZpgaEj5dTQ2Jo/original.png
+                        name: Gigs Global
+                        price:
+                          amount: 999
+                          currency: USD
+                        provider: p5
+                        requirements:
+                          address: present
+                          device: none
+                          user.birthday: none
+                          user.fullName: present
+                        simTypes:
+                          - eSIM
+                          - pSIM
+                        sms: 100
+                        smsUnit: message
+                        status: available
+                        tags:
+                          - smartphone
+                          - travel
+                        validity:
+                          minimumPeriods: 12
+                          type: oneTime
+                          unit: day
+                          value: 7
+                        voice: 30000
+                        voiceUnit: second
+                        createdAt: '2021-01-21T19:38:34Z'
                       porting: prt_0SNlurA049MEWV39s2kSYqaat7ZS
-                      sim: sim_0SNlurA049MEWV1BAAmWZULA4lf6
+                      sim:
+                        object: sim
+                        id: sim_0SNlurA049MEWV1BAAmWZULA4lf6
+                        iccid: '89883070000007537119'
+                        provider: p4
+                        status: inactive
+                        type: eSIM
+                        createdAt: '2021-01-21T19:38:34Z'
                       status: pending
-                      user: usr_0SNlurA049MEWV4OpCwsNyC9Kn2d
-                      activatedAt: "2021-01-21T19:38:34Z"
-                      canceledAt: "2021-01-29T13:22:51Z"
-                      createdAt: "2021-01-21T19:32:13Z"
-                      endedAt: "2021-02-20T19:38:34Z"
-                      firstUsageAt: "2021-01-21T19:38:34Z"
+                      user:
+                        object: user
+                        id: usr_0SNlurA049MEWV4OpCwsNyC9Kn2d
+                        birthday: '2017-07-21'
+                        email: john.doe@example.com
+                        emailVerified: true
+                        fullName: John Doe
+                        preferredLocale: en-US
+                        createdAt: '2021-01-21T19:38:34Z'
+                      activatedAt: '2021-01-21T19:38:34Z'
+                      canceledAt: '2021-01-29T13:22:51Z'
+                      createdAt: '2021-01-21T19:32:13Z'
+                      endedAt: '2021-02-20T19:38:34Z'
+                      firstUsageAt: '2021-01-21T19:38:34Z'
                   moreItemsAfter: null
                   moreItemsBefore: null
+
 types:
   SubscriptionId: string
+  
   SubscriptionStatus:
     enum:
       - pending
       - active
       - ended
-  Subscription:
+  
+  Subscription: 
+    properties:
+      object: 
+        type: SubscriptionObject
+        docs: Type of object is always `subscription`.
+      id: 
+        type: string
+        docs: Unique identifier for the subscription.
+      currentPeriod: optional<CurrentPeriod>
+      phoneNumber:
+        type: string
+        docs: The phone number attached to the SIM in E.164 format. Only available for voice plans.
+      plan: plans.Plan 
+      porting: 
+        type: optional<string>
+        docs: Unique identifier for the porting.
+      sim: optional<sims.Sim>
+      status:
+        type: SubscriptionStatus
+        docs: The current status of the subscription.
+      user: users.User 
+      activatedAt:
+        type: datetime
+        docs: Time when the subscription was activated.
+      canceledAt:
+        type: datetime
+        docs: Time when the subscription was canceled.
+      createdAt:
+        type: datetime
+        docs: Time when the subscription was created.
+      endedAt:
+        type: datetime
+        docs: Time when the subscription was ended.
+      firstUsageAt:
+        type: datetime
+        docs: Time when the subscription was first used.
+
+  SubscriptionList:
     properties:
       object:
         type: string
@@ -201,6 +301,7 @@ types:
       moreItemsBefore:
         type: optional<string>
         docs: A unique identifier to be used as `before` pagination parameter if more items are available sorted before the current batch of items.
+  
   SubscriptionItem:
     properties:
       object:
@@ -213,15 +314,15 @@ types:
       phoneNumber:
         type: string
         docs: The phone number attached to the SIM in E.164 format. Only available for voice plans.
-      plan: string #TODO model the nested object
+      plan: plans.Plan
       porting:
         type: optional<string>
         docs: Unique identifier for the porting.
-      sim: string #TODO model the nested object
+      sim: sims.Sim
       status:
         type: SubscriptionStatus
         docs: The current status of the subscription.
-      user: string #TODO model the nested object
+      user: users.User 
       activatedAt:
         type: datetime
         docs: Time when the subscription was activated.
@@ -249,3 +350,7 @@ types:
       end:
         type: datetime
         docs: End of the current subscription period.
+
+  SubscriptionObject: 
+    enum: 
+      - subscription 
