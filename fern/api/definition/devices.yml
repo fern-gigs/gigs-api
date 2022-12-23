@@ -77,14 +77,10 @@ types:
         type: string
       simTypes: 
         docs: List of SIM types supported by this device model.
-        type: list<SimTypes>
+        type: list<commons.SimTypes>
       type:
         docs: The type of the device model.
         type: DeviceModelType
-  SimTypes:
-    enum:
-      - eSIM
-      - pSIM
   DeviceModelType: 
     enum: 
       - car
