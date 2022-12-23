@@ -1,0 +1,93 @@
+imports:
+  commons: commons.yml
+  projects: projects.yml
+
+services:
+  http:
+    UserService:
+      auth: true 
+      base-path: /projects/{project}/
+      path-parameters:
+        project: 
+          type: projects.ProjectId
+          docs: The unique identifier for the project.
+      endpoints:
+        create:
+          display-name: Create a user
+          docs: Creates a new user with the given parameters.
+          path: /users 
+          method: POST
+          request: 
+            name: CreateUserRequest 
+            body: 
+              properties:
+                object: 
+                  type: UserObject
+                  docs: Type of object is always `user`.
+                birthday:
+                  type: string
+                  docs: The birthday of the user. 
+                email: 
+                  type: string 
+                  docs: The primary verified email address of the user.
+                fullName: 
+                  type: string 
+                  docs: The user's full name. Some plans require the user name to be present when creating a subscription. Check the plan requirements for that.
+                preferredLocale:
+                  type: string 
+                  docs: The user's locale preference represented as an [IETF language tag](https://en.wikipedia.org/wiki/IETF_language_tag). It defaults to the project's preferred locale.
+          response: 
+            type: User
+            docs: Returns the created user.
+          errors:
+            - commons.InvalidICCID
+          examples:
+            - path-parameters:
+                project: gigs 
+              request:
+                object: user 
+                birthday: "2017-07-21"
+                email: john.doe@example.com
+                fullName: John Doe
+                preferredLocale: en-US
+              response: 
+                body: 
+                  object: user 
+                  id: usr_0SNlurA049MEWV4OpCwsNyC9Kn2d
+                  birthday: "2017-07-21"
+                  email: john.doe@example.com
+                  emailVerified: true
+                  fullName: John Doe
+                  preferredLocale: en-US
+                  createdAt: "2021-01-21T19:38:34Z"
+
+types: 
+  UserObject: 
+    enum: 
+      - user 
+  User: 
+    properties:
+      object: 
+        type: UserObject
+        docs: Type of object is always `user`.
+      id: 
+        type: string 
+        docs: Unique identifier for the user.
+      birthday:
+        type: string
+        docs: The birthday of the user. 
+      email: 
+        type: string 
+        docs: The primary verified email address of the user.
+      emailVerified: 
+        type: boolean
+        docs: Whether the user's primary email address is verified or not.
+      fullName: 
+        type: string 
+        docs: The user's full name. Some plans require the user name to be present when creating a subscription. Check the plan requirements for that.
+      preferredLocale:
+        type: string 
+        docs: The user's locale preference represented as an [IETF language tag](https://en.wikipedia.org/wiki/IETF_language_tag). It defaults to the project's preferred locale.
+      createdAt: 
+        type: datetime
+        docs: Time when the user was created.

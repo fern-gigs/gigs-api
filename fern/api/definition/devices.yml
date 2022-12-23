@@ -49,7 +49,7 @@ services:
                   object: error
                   code: invalidICCID
                   details:
-                    - object: commons.propertyErrorDetail
+                    - object: propertyErrorDetail
                       code: propertyRequired
                       message: Invalid value for property.
                       property: property1
