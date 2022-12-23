@@ -9,10 +9,119 @@ services:
       auth: true
       base-path: /projects/{project}/
       path-parameters:
-        project: 
+        project:
           type: projects.ProjectId
           docs: The unique identifier for the project.
       endpoints:
+        create:
+          display-name: Create a subscription
+          docs: Creates a new subscription for an existing user in the specified project.
+          path: /subscriptions
+          request:
+            name: CreateSubscriptionRequest
+            body:
+              properties:
+                plan: 
+                  type: string 
+                  docs: The unique identifier for the existing plan to be used for the subscription.
+                sim:
+                  type: optional<string>
+                  docs: The unique identifier for the existing SIM to be used for the subscription. In combination with an eSIM plan, it can be omitted to request a new eSIM.
+                userAddress:
+                  type: optional<string> 
+                  docs: The unique identifier for the existing user address to be used for the subscription. Only needed if the plan requires an address.
+                user:
+                  type: string 
+                  docs: The unique identifier for the existing user to which the subscription will be assigned.
+                porting: 
+                  type: optional<string>
+                  docs: The unique identifier for the existing draft porting to be used for the subscription.
+          examples: 
+            - path-parameters:
+                project: gigs
+              request: 
+                plan: pln_0SNlurA049MEWV3V0q7gjQbM4EVo
+                sim: sim_0SNlurA049MEWV1BAAmWZULA4lf6
+                userAddress: adr_0SNlurA049MEWV5ELDmnaqVXgTFT
+                user: usr_0SNlurA049MEWV4OpCwsNyC9Kn2d
+                porting: prt_0SNlurA049MEWV39s2kSYqaat7ZS
+              response: 
+                # success
+                body: 
+                  object: subscription
+                  id: sub_0SNlurA049MEWV2gSfSxi00xlPIi
+                  currentPeriod:
+                    number: 1
+                    start: '2021-01-21T19:32:13Z'
+                    end: '2021-02-20T19:38:34Z'
+                  phoneNumber: '+25411865216434'
+                  plan:
+                    object: plan
+                    id: pln_0SNlurA049MEWV3V0q7gjQbM4EVo
+                    coverage:
+                      object: coverage
+                      id: de
+                      countries:
+                        - DE
+                        - FR
+                        - US
+                      name: Europe
+                    data: 10000000000
+                    dataUnit: byte
+                    description: A data plan you will love! Operates in most countries of the world.
+                    image: https://i.gigscdn.com/pr/nTZpgaEj5dTQ2Jo/original.png
+                    name: Gigs Global
+                    price:
+                      amount: 999
+                      currency: USD
+                    provider: p5
+                    requirements:
+                      address: present
+                      device: none
+                      user.birthday: none
+                      user.fullName: present
+                    simTypes:
+                      - eSIM
+                      - pSIM
+                    sms: 100
+                    smsUnit: message
+                    status: available
+                    tags:
+                      - smartphone
+                      - travel
+                    validity:
+                      minimumPeriods: 12
+                      type: oneTime
+                      unit: day
+                      value: 7
+                    voice: 30000
+                    voiceUnit: second
+                    createdAt: '2021-01-21T19:38:34Z'
+                  porting: prt_0SNlurA049MEWV39s2kSYqaat7ZS
+                  sim:
+                    object: sim
+                    id: sim_0SNlurA049MEWV1BAAmWZULA4lf6
+                    iccid: '89883070000007537119'
+                    provider: p4
+                    status: inactive
+                    type: eSIM
+                    createdAt: '2021-01-21T19:38:34Z'
+                  status: pending
+                  user:
+                    object: user
+                    id: usr_0SNlurA049MEWV4OpCwsNyC9Kn2d
+                    birthday: '2017-07-21'
+                    email: john.doe@example.com
+                    emailVerified: true
+                    fullName: John Doe
+                    preferredLocale: en-US
+                    createdAt: '2021-01-21T19:38:34Z'
+                  activatedAt: '2021-01-21T19:38:34Z'
+                  canceledAt: '2021-01-29T13:22:51Z'
+                  createdAt: '2021-01-21T19:32:13Z'
+                  endedAt: '2021-02-20T19:38:34Z'
+                  firstUsageAt: '2021-01-21T19:38:34Z'
+
         listAll:
           display-name: List all subscriptions
           docs: Returns a list of subscriptions. The subscriptions returned are sorted by creation date, with the most recently created subscriptions appearing first.
@@ -20,7 +129,7 @@ services:
           request:
             name: ListAllSubscriptionsRequest
             query-parameters:
-              after: 
+              after:
                 docs: A cursor for use in pagination. The `after` parameter takes an object ID that defines the position in the list, only items immediately following the item with that ID will be returned.
                 type: optional<string>
               before:
@@ -28,7 +137,7 @@ services:
                 type: optional<string>
               limit:
                 docs: The limit of items to be returned in the list, between 0 and 200. `>= 0` `<= 200`. Default is `10`.
-                type: optional<integer> 
+                type: optional<integer>
               plan:
                 docs: The unique identifier for the plan to be filtered by.
                 type: optional<plans.PlanId>
@@ -48,7 +157,7 @@ services:
           examples:
             - path-parameters:
                 project: gigs
-              response: 
+              response:
                 body:
                   object: list
                   items:
@@ -56,43 +165,43 @@ services:
                       id: sub_0SNlurA049MEWV2gSfSxi00xlPIi
                       currentPeriod:
                         number: 1
-                        start: '2021-01-21T19:32:13Z'
-                        end: '2021-02-20T19:38:34Z'
-                      phoneNumber: '+25411865216434'
+                        start: "2021-01-21T19:32:13Z"
+                        end: "2021-02-20T19:38:34Z"
+                      phoneNumber: "+25411865216434"
                       plan: pln_0SNlurA049MEWV3V0q7gjQbM4EVo
                       porting: prt_0SNlurA049MEWV39s2kSYqaat7ZS
                       sim: sim_0SNlurA049MEWV1BAAmWZULA4lf6
                       status: pending
                       user: usr_0SNlurA049MEWV4OpCwsNyC9Kn2d
-                      activatedAt: '2021-01-21T19:38:34Z'
-                      canceledAt: '2021-01-29T13:22:51Z'
-                      createdAt: '2021-01-21T19:32:13Z'
-                      endedAt: '2021-02-20T19:38:34Z'
-                      firstUsageAt: '2021-01-21T19:38:34Z'
+                      activatedAt: "2021-01-21T19:38:34Z"
+                      canceledAt: "2021-01-29T13:22:51Z"
+                      createdAt: "2021-01-21T19:32:13Z"
+                      endedAt: "2021-02-20T19:38:34Z"
+                      firstUsageAt: "2021-01-21T19:38:34Z"
                   moreItemsAfter: null
                   moreItemsBefore: null
-types: 
+types:
   SubscriptionId: string
-  SubscriptionStatus: 
-    enum: 
+  SubscriptionStatus:
+    enum:
       - pending
       - active
       - ended
-  Subscription: 
+  Subscription:
     properties:
-      object: 
+      object:
         type: string
         docs: Type of object is always `list`.
       items:
         type: list<SubscriptionItem>
         docs: List of objects of type `subscription`.
-      moreItemsAfter: 
+      moreItemsAfter:
         type: optional<string>
         docs: A unique identifier to be used as `after` pagination parameter if more items are available sorted after the current batch of items.
       moreItemsBefore:
         type: optional<string>
         docs: A unique identifier to be used as `before` pagination parameter if more items are available sorted before the current batch of items.
-  SubscriptionItem: 
+  SubscriptionItem:
     properties:
       object:
         type: string
@@ -109,7 +218,7 @@ types:
         type: optional<string>
         docs: Unique identifier for the porting.
       sim: string #TODO model the nested object
-      status: 
+      status:
         type: SubscriptionStatus
         docs: The current status of the subscription.
       user: string #TODO model the nested object
@@ -128,15 +237,15 @@ types:
       firstUsageAt:
         type: datetime
         docs: Time when the subscription was first used.
-      
-  CurrentPeriod: 
+
+  CurrentPeriod:
     properties:
       number:
-        type: integer 
+        type: integer
         docs: Sequence number of the subscription period.
       start:
         type: datetime
         docs: Beginning of the current subscription period.
       end:
-        type: datetime 
+        type: datetime
         docs: End of the current subscription period.
