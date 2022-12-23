@@ -1,5 +1,6 @@
 imports:
   commons: commons.yml
+  sims: sims.yml
 
 services:
   http:
@@ -7,6 +8,92 @@ services:
       auth: true 
       base-path: /
       endpoints:
+        list:
+          display-name: Returns a list of plans. 
+          path: /projects/{project}/plans/
+          path-parameters:
+            project: 
+              docs: The unique identifier for the project.
+              type: string 
+          method: GET 
+          request: 
+            name: PlanListRequest
+            query-parameters:
+              after: 
+                docs: A cursor for use in pagination. The `after` parameter takes an object ID that defines the position in the list, only items immediately following the item with that ID will be returned.
+                type: optional<string>
+              before:
+                docs: A cursor for use in pagination. The `before` parameter takes an object ID that defines the position in the list, only items immediately preceding the item with that ID will be returned.
+                type: optional<string>
+              limit:
+                docs: The limit of items to be returned in the list, between 0 and 200. `>= 0` `<= 200`. Default is `10`.
+                type: optional<integer> 
+              plan:
+                docs: The unique identifier for the plan to be filtered by.
+                type: optional<PlanId>
+              sim:
+                docs: The unique identifier for the sim to be filtered by.
+                type: optional<sims.SimId>
+              status:
+                docs: The status to filter the plans by. Only available plans are returned by default.
+                type: optional<PlanStatus>
+              user:
+                docs: The unique identifier for the user to be filtered by.
+                type: optional<string>
+          response: 
+            docs: Returns a list of plan objects.
+            type: PlanList
+          examples: 
+            - path-parameters:
+                project: gigs
+              response: 
+                body:
+                  object: list
+                  items: 
+                    - object: plan 
+                      id: pln_0SNlurA049MEWV3V0q7gjQbM4EVo 
+                      coverage: 
+                        object: coverage 
+                        id: de 
+                        countries: 
+                          - DE 
+                          - FR 
+                          - US 
+                        name: Europe 
+                      data: 10000000000
+                      dataUnit: byte 
+                      description: A data plan you will love! Operates in most countries of the world.
+                      image: https://i.gigscdn.com/pr/nTZpgaEj5dTQ2Jo/original.png
+                      name: Gigs Global
+                      price:  
+                        amount: 999
+                        currency: USD 
+                      provider: p5 
+                      requirements: 
+                        address: present 
+                        device: none 
+                        user.birthday: none 
+                        user.fullName: present 
+                      simTypes:
+                        - eSIM
+                        - pSIM 
+                      sms: 100 
+                      smsUnit: message 
+                      status: available 
+                      tags: 
+                        - smartphone
+                        - travel 
+                      validity: 
+                        minimumPeriods: 12 
+                        type: oneTime 
+                        unit: day 
+                        value: 7
+                      voice: 30000
+                      voiceUnit: second 
+                      createdAt: "2021-01-21T19:38:34Z"
+                  moreItemsAfter: null 
+                  moreItemsBefore: null 
+
         archive:
           display-name: Archive a plan
           docs: Set the status of a plan to archived. An archived plan can not be used to create new subscriptions.
@@ -31,8 +118,46 @@ services:
               response: 
                 body:
                   object: plan 
-                  id: pln_0SNlurA049MEWV3V0q7gjQbM4EVo
-
+                  id: pln_0SNlurA049MEWV3V0q7gjQbM4EVo 
+                  coverage: 
+                    object: coverage 
+                    id: de 
+                    countries: 
+                      - DE 
+                      - FR 
+                      - US 
+                    name: Europe 
+                  data: 10000000000
+                  dataUnit: byte 
+                  description: A data plan you will love! Operates in most countries of the world.
+                  image: https://i.gigscdn.com/pr/nTZpgaEj5dTQ2Jo/original.png
+                  name: Gigs Global
+                  price:  
+                    amount: 999
+                    currency: USD 
+                  provider: p5 
+                  requirements: 
+                    address: present 
+                    device: none 
+                    user.birthday: none 
+                    user.fullName: present 
+                  simTypes:
+                    - eSIM
+                    - pSIM 
+                  sms: 100 
+                  smsUnit: message 
+                  status: available 
+                  tags: 
+                    - smartphone
+                    - travel 
+                  validity: 
+                    minimumPeriods: 12 
+                    type: oneTime 
+                    unit: day 
+                    value: 7
+                  voice: 30000
+                  voiceUnit: second 
+                  createdAt: "2021-01-21T19:38:34Z"
 
 types: 
   PlanId: string 
@@ -40,8 +165,179 @@ types:
     properties:
       object: 
         docs: Type of object is always `plan`.
-        type: string 
+        type: PlanObject 
       id: 
-        docs:  The unique identifier for the plan.
+        docs: The unique identifier for the plan.
         type: PlanId
-      #etc. (there are many more properties)
+      coverage: Coverage 
+      data: 
+        docs: The data allowance included in this plan. A value of `-1` indicates unlimited data.
+        type: integer 
+      dataUnit:
+        docs: The unit of the data value is always `byte`.
+        type: DataUnit 
+      description:
+        docs: The plan's description, meant to be displayable to the users.
+        type: optional<string>
+      image:
+        docs: The plan's image, meant to be displayable to the users.
+        type: string 
+      name: 
+        docs: The plan's name, meant to be displayable to the users.
+        type: string 
+      price: Price
+      provider: 
+        docs: The ID of the network provider supported by this plan.
+        type: string 
+      requirements: PlanRequirements
+      simTypes:
+        docs: List of SIM types supported by this plan.
+        type: list<sims.SimTypes> 
+      sms: 
+        docs: The SMS allowance included in this plan. A value of `-1` indicates unlimited SMS.
+        type: integer 
+      smsUnit: 
+        docs: The unit of the sms value is always `message`.
+        type: PlanSmsUnit
+      status: PlanStatus
+      tags: 
+        docs: List of tags describing this plan.
+        type: list<string>
+      validity: Validity 
+      voice:
+        docs: The voice call allowance in seconds included in this plan. A value of `-1` indicates unlimited voice calls.
+        type: integer 
+      voiceUnit:
+        docs: The unit of the voice value is always `second`.
+        type: VoiceUnit
+      createdAt: 
+        docs: Time when the plan was created.
+        type: datetime
+  PlanStatus: 
+    enum: 
+      - available 
+      - archived 
+      - pending 
+      - draft
+  PlanList:
+    properties: 
+      object: 
+        docs: Type of object is always `list`.
+        type: PlanListObject
+      items: 
+        docs: List of objects of type `plan`.
+        type: list<Plan>
+      moreItemsAfter: 
+        type: optional<string>
+        docs: A unique identifier to be used as `after` pagination parameter if more items are available sorted after the current batch of items.
+      moreItemsBefore:
+        type: optional<string>
+        docs: A unique identifier to be used as `before` pagination parameter if more items are available sorted before the current batch of items.
+  PlanObject:
+    enum:
+      - plan
+  PlanListObject: 
+    enum:
+      - list
+  VoiceUnit: 
+    enum:
+      - second
+  Validity: 
+    properties: 
+      minimumPeriods: 
+        type: integer
+        docs: The minimum number of subscription periods that the plan must be renewed. `>= 0`
+      type: 
+        type: ValidityType
+        docs: The validity type of this plan.
+      unit: 
+        type: ValidityUnit
+        docs: The time unit of the subscription period.
+      value: 
+        type: integer 
+        docs: The amount of units (specified in the `unit` property) in each subscription period. `>= 1`
+
+  ValidityType:
+    enum: 
+      - oneTime 
+      - recurring 
+
+  ValidityUnit:
+    enum:
+      - day 
+      - month
+  
+  PlanSmsUnit:
+    enum: 
+      - message
+
+  PlanRequirements: 
+    properties:
+      address: 
+        type: PlanRequirementsAddress
+        docs: The address requirements that must be fulfilled before a user may purchase a subscription.
+      device: 
+        type: PlanRequirementsDevice
+        docs: The device requirements that must be fulfilled before a user may purchase a subscription.
+      user.birthday:
+        type: PlanRequirementsUserBirthday
+        docs: The user birthday requirements that must be fulfilled before a user may purchase a subscription.
+      user.fullName: 
+        type: PlanRequirementsUserFullName
+        docs: The user full name requirements that must be fulfilled before a user may purchase a subscription.
+
+  PlanRequirementsAddress: 
+    enum: 
+      - none 
+      - present 
+      - verified
+
+  PlanRequirementsDevice:
+    enum:
+      - none 
+      - present 
+      - verified
+
+  PlanRequirementsUserBirthday: 
+    enum: 
+      - none 
+      - present 
+      - verified
+  
+  PlanRequirementsUserFullName:
+    enum: 
+        - none 
+        - present 
+        - verified
+
+  Price: 
+    properties: 
+      amount: 
+        type: integer 
+        docs: The price amount in the currency's minor unit, e.g. "cents" for many currencies. `>= 0`
+      currency: 
+        type: string 
+        docs: Three-letter ISO 4217 currency code. Must be a supported currency.
+
+  DataUnit: 
+    enum: 
+      - byte 
+
+  Coverage: 
+    properties:
+      object: 
+        type: CoverageObject
+        docs: Type of object is always `coverage`.
+      id: 
+        type: string 
+        docs: Unique identifier for the coverage configuration.
+      countries: 
+        type: list<string>
+        docs: List of countries in ISO 3166-1 alpha-2 format covered by this coverage configuration.
+      name:
+        type: string 
+        docs: A human-readable identifier of the coverage configuration, might not be unique.
+
+  CoverageObject: 
+    enum: 
+      - coverage 

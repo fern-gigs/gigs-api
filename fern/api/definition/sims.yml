@@ -1,0 +1,37 @@
+types:   
+  SimId: string 
+  SimTypes:
+    enum:
+      - eSIM
+      - pSIM
+  Sim: 
+    properties: 
+      object: SimObject 
+      id:
+        type: string 
+        docs: Unique identifier for the SIM.
+      iccid: 
+        type: string 
+        docs: The ICCID (integrated circuit card identifier) associated with the SIM.
+      provider: 
+        type: string 
+        docs: The ID of the network provider of the SIM.
+      status: 
+        type: SimStatus
+        docs: The status of the SIM.
+      type: 
+        type: SimTypes 
+        docs: The type of the SIM.
+      createdAt: 
+        type: datetime 
+        docs: Time when the SIM was created.
+      
+  SimObject: 
+    enum: 
+      - sim
+
+  SimStatus: 
+    enum: 
+      - inactive 
+      - active 
+      - retired 
