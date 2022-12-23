@@ -4,7 +4,7 @@ Tagging a release on this repository will update the:
 
 - [Node.js SDK repo](https://github.com/fern-gigs/gigs-node)
 - [OpenAPI description repo](https://github.com/fern-gigs/gigs-openapi)
-- [Postman collection repo](https://github.com/fern-gigs/gigs-postman)
+- [Postman Collection repo](https://github.com/fern-gigs/gigs-postman)
 - _More SDKs to come..._
 
 ## What is in this repository?
