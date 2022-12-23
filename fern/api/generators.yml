@@ -2,7 +2,7 @@ groups:
   external:
     generators:
       - name: fernapi/fern-typescript-sdk
-        version: 0.0.250
+        version: 0.0.251
         output:
           location: npm
           package-name: '@fern-api/gigs'
