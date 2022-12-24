@@ -10,7 +10,7 @@ types:
         docs: A machine-readable description of the error.
         type: optional<string>
       details: 
-        docs: Optional array containing specific information for the current error.Show all...
+        docs: Optional array containing specific information for the current error.
         type: optional<list<PropertyErrorDetail>>
       documentation:
         docs: An optional list of URLs providing further information to resolve the error.
