@@ -112,7 +112,7 @@ services:
           path: /projects/{project}/plans/{id}/archive
           path-parameters:
             project: 
-              docs: The unique identifier for the project.
+              docs: The unique identifier for the [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
               type: string 
             id: 
               docs: The unique identifier for the plan.
@@ -172,12 +172,15 @@ services:
                   createdAt: "2021-01-21T19:38:34Z"
 
 types: 
-  PlanId: string 
+  PlanId: 
+    type: string 
+    examples:
+      - pln_0SNlurA049MEWV3V0q7gjQbM4EVo
   Plan: 
     properties:
       object: 
         docs: Type of object is always `plan`.
-        type: PlanObject 
+        type: PlanObject
       id: 
         docs: The unique identifier for the plan.
         type: PlanId
@@ -248,8 +251,12 @@ types:
   PlanObject:
     enum:
       - plan
+    examples: 
+      - plan
   PlanListObject: 
     enum:
+      - list
+    examples: 
       - list
   VoiceUnit: 
     enum:
@@ -351,7 +358,16 @@ types:
       name:
         type: string 
         docs: A human-readable identifier of the coverage configuration, might not be unique.
-
+    examples: 
+      - object: coverage 
+        id: de 
+        countries:
+          - DE 
+          - FR
+          - US 
+        name: Europe
   CoverageObject: 
     enum: 
+      - coverage 
+    examples: 
       - coverage 

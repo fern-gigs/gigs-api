@@ -12,7 +12,7 @@ services:
       path-parameters:
         project:
           type: projects.ProjectId
-          docs: The unique identifier for the project.
+          docs: The unique identifier for the [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project)
       endpoints:
         create:
           display-name: Create a subscription
