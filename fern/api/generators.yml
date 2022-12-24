@@ -10,6 +10,6 @@ groups:
         github:
           repository: fern-gigs/gigs-node
       - name: fernapi/fern-openapi
-        version: 0.0.12-1-ga0af3a2
+        version: 0.0.13
         github:
           repository: fern-gigs/gigs-openapi
