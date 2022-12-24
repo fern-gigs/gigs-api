@@ -49,7 +49,15 @@ services:
             type: PlanList
           examples: 
             - path-parameters:
-                project: gigs
+                project: gigs 
+              query-parameters: 
+                after: 01G7PFYGYN8WC45QG5GVF8V07V
+                before: 01FKPSFG45QG901FV07WYN8WC
+                limit: 10
+                plan: pln_0SNlurA049MEWV3V0q7gjQbM4EVo
+                sim: sim_0SNlurA049MEWV1BAAmWZULA4lf6
+                status: available
+                user: usr_0SNlurA049MEWV4OpCwsNyC9Kn2d
               response: 
                 body:
                   object: list
