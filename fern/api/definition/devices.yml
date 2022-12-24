@@ -5,7 +5,7 @@ imports:
 services:
   http:
     DeviceService:
-      auth: true 
+      auth: true
       base-path: /
       endpoints:
         retrieve:
@@ -13,9 +13,11 @@ services:
           docs: Retrieves the details of an existing device model.
           path: /deviceModels/{id}
           path-parameters:
-            id: DeviceId
+            id:
+              type: DeviceId
+              docs: The unique identifier for the device model.
           method: GET
-          response: 
+          response:
             type: Device
             docs: Returns the device model object if it exists.
           errors:
@@ -24,11 +26,11 @@ services:
             #success
             - path-parameters:
                 id: dmd_0SNlurA04OUskUGfGAn3Rh
-              response: 
-                body: 
+              response:
+                body:
                   object: deviceModel
                   id: dmd_0SNlurA04OUskUGfGAn3Rh
-                  brand: Apple 
+                  brand: Apple
                   name: iPhone 12 Pro
                   simTypes: [eSIM]
                   type: smartphone
@@ -36,8 +38,8 @@ services:
             - path-parameters:
                 id: myInvalidId
               response:
-                error: commons.DoesNotExist 
-                body: 
+                error: commons.DoesNotExist
+                body:
                   object: error
                   message: Invalid ICCID format.
                   type: invalid
@@ -45,8 +47,8 @@ services:
             - path-parameters:
                 id: myInvalidId
               response:
-                error: commons.DoesNotExist 
-                body: 
+                error: commons.DoesNotExist
+                body:
                   object: error
                   code: invalidICCID
                   details:
@@ -54,7 +56,7 @@ services:
                       code: propertyRequired
                       message: Invalid value for property.
                       property: property1
-                      suggestion: alternative_value 
+                      suggestion: alternative_value
                   documentation:
                     - https://developers.gigs.com/docs/api/ZG9jOjExMTYzMDU0-error-handling
                   hint: Parameter iccid must match /^([0-9]{19}F?|[0-9]{20})$/i
@@ -62,28 +64,28 @@ services:
                   type: invalid
 types:
   DeviceId: string
-  Device: 
+  Device:
     properties:
       object:
         docs: Type of object is always `deviceModel`.
-        type: string 
-      id: 
+        type: DeviceModelObject
+      id:
         docs: Unique identifier for the deviceModel.
-        type: DeviceId 
+        type: DeviceId
       brand:
         docs: The brand of the device model.
         type: string
-      name: 
+      name:
         docs: The device model's name.
         type: string
-      simTypes: 
+      simTypes:
         docs: List of SIM types supported by this device model.
         type: list<sims.SimTypes>
       type:
         docs: The type of the device model.
         type: DeviceModelType
-  DeviceModelType: 
-    enum: 
+  DeviceModelType:
+    enum:
       - car
       - iot
       - laptop
@@ -96,3 +98,6 @@ types:
       - wearable
       - other
 
+  DeviceModelObject:
+    enum:
+      - deviceModel
