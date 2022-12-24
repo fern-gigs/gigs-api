@@ -5,6 +5,6 @@ error-discrimination:
 environments:
   Production: https://api.gigs.com
 default-environment: Production
-# docs: | 
-#   API to manage voice & data plans for smartphones, wearables and IoT in 200+ countries.
-#   support@gigs.com
+docs: | 
+  API to manage voice & data plans for smartphones, wearables and IoT in 200+ countries.
+  support@gigs.com
