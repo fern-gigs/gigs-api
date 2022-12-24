@@ -29,7 +29,7 @@ jobs:
       - name: Download Fern
         run: npm install -g fern-api
 
-      - name: Release Node.js SDK
+      - name: Release SDKs, Postman, OpenAPI
         env:
           FERN_NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
           POSTMAN_API_KEY: ${{ secrets.FERN_POSTMAN_API_KEY }}
