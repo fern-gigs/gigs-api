@@ -9,11 +9,12 @@ services:
       base-path: /
       endpoints:
         list:
-          display-name: Returns a list of plans. 
+          display-name: List all plans
+          docs: Returns a list of plans. 
           path: /projects/{project}/plans/
           path-parameters:
             project: 
-              docs: The unique identifier for the project.
+              docs: The unique identifier for the [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
               type: string 
           method: GET 
           request: 
@@ -26,7 +27,10 @@ services:
                 docs: A cursor for use in pagination. The `before` parameter takes an object ID that defines the position in the list, only items immediately preceding the item with that ID will be returned.
                 type: optional<string>
               limit:
-                docs: The limit of items to be returned in the list, between 0 and 200. `>= 0` `<= 200`. Default is `10`.
+                docs: | 
+                  The limit of items to be returned in the list, between 0 and 200. 
+                  `>= 0` `<= 200`
+                  Default: `10`
                 type: optional<integer> 
               plan:
                 docs: The unique identifier for the plan to be filtered by.
@@ -314,7 +318,9 @@ types:
     properties: 
       amount: 
         type: integer 
-        docs: The price amount in the currency's minor unit, e.g. "cents" for many currencies. `>= 0`
+        docs: | 
+          The price amount in the currency's minor unit, e.g. "cents" for many currencies. 
+          `>= 0`
       currency: 
         type: string 
         docs: Three-letter ISO 4217 currency code. Must be a supported currency.
