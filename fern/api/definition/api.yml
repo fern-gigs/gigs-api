@@ -1,4 +1,5 @@
 name: gigs-core-api
+display-name: Gigs Core API
 auth: bearer
 error-discrimination: 
   strategy: status-code
